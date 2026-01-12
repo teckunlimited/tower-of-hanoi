@@ -313,7 +313,7 @@ sam deploy --guided
 **Frontend:**
 ```bash
 npm run build
-vercel --prod
+vercel --prd
 ```
 - Environment variable configuration
 - CDN edge deployment

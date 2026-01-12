@@ -193,7 +193,7 @@ cd tower-of-hanoi
 
 ```bash
 # Test with curl
-curl -X POST https://your-api-url/prod/solve \
+curl -X POST https://your-api-url/prd/solve \
   -H "Content-Type: application/json" \
   -d '{"disks": 3}'
 
@@ -232,7 +232,7 @@ curl -X POST https://your-api-url/prod/solve \
 
 4. **Edit `.env.local` with your API endpoint**:
    ```env
-   VITE_API_URL=https://your-api-id.execute-api.us-east-1.amazonaws.com/prod/solve
+   VITE_API_URL=https://your-api-id.execute-api.us-east-1.amazonaws.com/prd/solve
    ```
 
 5. **Start development server**:
@@ -252,7 +252,7 @@ npm i -g vercel
 
 # Deploy
 cd frontend
-vercel --prod
+vercel --prd
 
 # Set environment variable in Vercel dashboard
 # VITE_API_URL = your-lambda-api-url
@@ -268,7 +268,7 @@ npm i -g netlify-cli
 npm run build
 
 # Deploy
-netlify deploy --prod --dir=dist
+netlify deploy --prd --dir=dist
 
 # Set environment variable in Netlify dashboard
 ```

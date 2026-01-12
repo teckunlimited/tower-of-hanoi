@@ -55,7 +55,7 @@ npm install -g serverless
 npm install --save-dev serverless-python-requirements
 
 # Deploy the stack
-serverless deploy --stage prod --region us-east-1
+serverless deploy --stage prd --region us-east-1
 ```
 
 This creates:
@@ -70,7 +70,7 @@ This creates:
 ```bash
 # Get the API endpoint
 API_URL=$(aws cloudformation describe-stacks \
-  --stack-name tower-of-hanoi-prod \
+  --stack-name tower-of-hanoi-prd \
   --region us-east-1 \
   --query 'Stacks[0].Outputs[?OutputKey==`ApiEndpoint`].OutputValue' \
   --output text)
@@ -98,7 +98,7 @@ npm run build
 ```bash
 # Get bucket name
 BUCKET_NAME=$(aws cloudformation describe-stacks \
-  --stack-name tower-of-hanoi-prod \
+  --stack-name tower-of-hanoi-prd \
   --region us-east-1 \
   --query 'Stacks[0].Outputs[?OutputKey==`FrontendBucketName`].OutputValue' \
   --output text)
@@ -121,7 +121,7 @@ aws s3 cp dist/index.html s3://$BUCKET_NAME/index.html \
 ```bash
 # Get distribution ID
 DISTRIBUTION_ID=$(aws cloudformation describe-stacks \
-  --stack-name tower-of-hanoi-prod \
+  --stack-name tower-of-hanoi-prd \
   --region us-east-1 \
   --query 'Stacks[0].Outputs[?OutputKey==`CloudFrontDistributionId`].OutputValue' \
   --output text)
@@ -136,7 +136,7 @@ aws cloudfront create-invalidation \
 
 ```bash
 CLOUDFRONT_URL=$(aws cloudformation describe-stacks \
-  --stack-name tower-of-hanoi-prod \
+  --stack-name tower-of-hanoi-prd \
   --region us-east-1 \
   --query 'Stacks[0].Outputs[?OutputKey==`CloudFrontURL`].OutputValue' \
   --output text)
@@ -220,7 +220,7 @@ Aliases:
 ### Update Backend Only
 
 ```bash
-serverless deploy --stage prod
+serverless deploy --stage prd
 ```
 
 ### Update Frontend Only
@@ -241,7 +241,7 @@ aws cloudfront create-invalidation \
 ### Update Both
 
 ```bash
-./deploy.sh prod us-east-1
+./deploy.sh prd us-east-1
 ```
 
 ## Monitoring
@@ -249,11 +249,11 @@ aws cloudfront create-invalidation \
 ### View Lambda Logs
 
 ```bash
-serverless logs -f hanoiSolver --stage prod --tail
+serverless logs -f hanoiSolver --stage prd --tail
 ```
 
 Or in AWS Console:
-- CloudWatch → Log Groups → `/aws/lambda/tower-of-hanoi-prod-solver`
+- CloudWatch → Log Groups → `/aws/lambda/tower-of-hanoi-prd-solver`
 
 ### CloudFront Metrics
 
@@ -294,7 +294,7 @@ For 10,000 requests/month:
 
 Check that API Gateway has CORS enabled:
 ```bash
-serverless info --stage prod
+serverless info --stage prd
 ```
 
 ### CloudFront Not Updating
@@ -312,7 +312,7 @@ Wait 5-10 minutes for propagation.
 
 Check CloudWatch logs for errors:
 ```bash
-serverless logs -f hanoiSolver --stage prod
+serverless logs -f hanoiSolver --stage prd
 ```
 
 ### S3 403 Errors
@@ -331,7 +331,7 @@ Remove all AWS resources:
 aws s3 rm s3://$BUCKET_NAME --recursive
 
 # Remove CloudFormation stack
-serverless remove --stage prod --region us-east-1
+serverless remove --stage prd --region us-east-1
 ```
 
 ## Security Best Practices
