@@ -1,0 +1,130 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, Avenir, Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+
+  color-scheme: dark;
+  color: rgba(255, 255, 255, 0.95);
+  background-color: #1a1a1a;
+
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  margin: 0;
+  min-width: 320px;
+  min-height: 100vh;
+}
+
+#root {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+@layer components {
+  .btn-primary {
+    @apply px-6 py-3 bg-cyber-cyan text-deep-charcoal rounded-xl font-bold transition-all duration-300 disabled:bg-gray-600 disabled:cursor-not-allowed shadow-cyber hover:shadow-cyber-lg hover:scale-105 active:scale-95 uppercase tracking-wider relative overflow-hidden;
+  }
+  
+  .btn-primary::before {
+    content: '';
+    @apply absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent translate-x-[-200%] transition-transform duration-700;
+  }
+  
+  .btn-primary:hover::before {
+    @apply translate-x-[200%];
+  }
+  
+  .btn-secondary {
+    @apply px-6 py-3 bg-charcoal hover:bg-light-charcoal text-cyber-cyan border-2 border-cyber-cyan/30 rounded-xl font-semibold transition-all duration-300 disabled:bg-gray-600 disabled:cursor-not-allowed hover:border-cyber-cyan/60 hover:scale-105 active:scale-95 relative overflow-hidden;
+  }
+  
+  .btn-secondary::before {
+    content: '';
+    @apply absolute inset-0 bg-gradient-to-r from-transparent via-cyber-cyan/10 to-transparent translate-x-[-200%] transition-transform duration-700;
+  }
+  
+  .btn-secondary:hover::before {
+    @apply translate-x-[200%];
+  }
+  
+  .input-field {
+    @apply px-4 py-3 bg-charcoal border-2 border-cyber-cyan/30 rounded-xl text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-cyber-cyan focus:border-cyber-cyan backdrop-blur-sm transition-all;
+  }
+  
+  /* Cyber Toggle Switch */
+  .cyber-toggle {
+    @apply relative inline-block w-14 h-8 cursor-pointer;
+  }
+  
+  .cyber-toggle input {
+    @apply opacity-0 w-0 h-0 absolute;
+  }
+  
+  .cyber-toggle-slider {
+    @apply absolute inset-0 bg-charcoal border-2 border-cyber-cyan/30 rounded-full transition-all duration-300;
+  }
+  
+  .cyber-toggle input:checked + .cyber-toggle-slider {
+    @apply bg-cyber-cyan/20 border-cyber-cyan shadow-lg shadow-cyber-cyan/50;
+  }
+  
+  .cyber-toggle input:disabled + .cyber-toggle-slider {
+    @apply opacity-50 cursor-not-allowed;
+  }
+  
+  .cyber-toggle-slider::before {
+    content: '';
+    @apply absolute left-1 bottom-1 h-5 w-5 bg-gray-400 rounded-full transition-all duration-300;
+  }
+  
+  .cyber-toggle input:checked + .cyber-toggle-slider::before {
+    @apply translate-x-6 bg-cyber-cyan shadow-lg shadow-cyber-cyan/50;
+  }
+}
+
+@keyframes gradient {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+.animate-gradient {
+  background-size: 200% 200%;
+  animation: gradient 3s ease infinite;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: #1a1a1a;
+  border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(to bottom, #00f2ff, #00a8b5);
+  border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #00f2ff;
+}
+
+/* Smooth transitions */
+* {
+  transition-property: background-color, border-color, color, fill, stroke;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 150ms;
+}

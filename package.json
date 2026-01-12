@@ -1,0 +1,20 @@
+{
+  "name": "tower-of-hanoi-deployment",
+  "version": "1.0.0",
+  "description": "Tower of Hanoi serverless deployment configuration",
+  "private": true,
+  "scripts": {
+    "deploy:dev": "AWS_PROFILE=tku ./scripts/deploy.sh dev",
+    "deploy:stg": "AWS_PROFILE=tku ./scripts/deploy.sh stg",
+    "deploy:prd": "AWS_PROFILE=tku ./scripts/deploy.sh prd",
+    "info": "AWS_PROFILE=tku serverless info --stage prd --region us-east-1",
+    "logs": "AWS_PROFILE=tku serverless logs -f hanoiSolver --stage prd --tail"
+  },
+  "devDependencies": {
+    "serverless": "^3.38.0",
+    "serverless-python-requirements": "^6.1.0"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}
