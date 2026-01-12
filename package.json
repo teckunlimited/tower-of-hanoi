@@ -11,7 +11,9 @@
     "logs": "AWS_PROFILE=tku serverless logs -f hanoiSolver --stage prd --tail"
   },
   "devDependencies": {
+    "esbuild": "^0.27.2",
     "serverless": "^3.38.0",
+    "serverless-esbuild": "^1.57.0",
     "serverless-python-requirements": "^6.1.0"
   },
   "engines": {

@@ -2,25 +2,24 @@
 
 ## 🚀 5-Minute Setup
 
-### Backend (AWS Lambda)
+### Backend (AWS Lambda with TypeScript)
 
 ```bash
-cd backend
+# From project root
+npm run deploy:dev
 
-# Build
-sam build
-
-# Deploy (follow prompts)
-sam deploy --guided
-
-# Get API URL
-aws cloudformation describe-stacks \
-  --stack-name tower-of-hanoi-stack \
-  --query 'Stacks[0].Outputs[?OutputKey==`HanoiApiUrl`].OutputValue' \
-  --output text
+# This automatically:
+# - Compiles TypeScript
+# - Deploys Lambda + API Gateway
+# - Creates S3 + CloudFront
+# - Builds and uploads frontend
 ```
 
 ### Frontend (React)
+
+Already deployed by the script above! Access via CloudFront URL provided in output.
+
+### Local Development
 
 ```bash
 cd frontend
@@ -28,7 +27,7 @@ cd frontend
 # Install
 npm install
 
-# Configure API
+# Configure API (use URL from deploy output)
 echo "VITE_API_URL=YOUR_API_URL_HERE" > .env.local
 
 # Run

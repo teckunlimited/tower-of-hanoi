@@ -1,0 +1,20 @@
+{
+  "name": "tower-of-hanoi-backend-ts",
+  "version": "1.0.0",
+  "description": "TypeScript implementation of Tower of Hanoi Lambda handler",
+  "main": "dist/handler.js",
+  "scripts": {
+    "build": "tsc",
+    "watch": "tsc --watch",
+    "test": "node dist/handler.js",
+    "clean": "rm -rf dist"
+  },
+  "keywords": ["tower-of-hanoi", "lambda", "typescript"],
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/aws-lambda": "^8.10.145",
+    "@types/node": "^20.11.5",
+    "typescript": "^5.3.3"
+  }
+}

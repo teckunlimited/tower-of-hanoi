@@ -2,15 +2,11 @@
 .aws-sam/
 samconfig.toml
 
-# Python
-__pycache__/
-*.py[cod]
-*$py.class
-*.so
-.Python
-env/
-venv/
-*.egg-info/
+# TypeScript / Node.js
+node_modules/
+dist/
+*.tsbuildinfo
+package-lock.json
 
 # IDEs
 .vscode/

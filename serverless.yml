@@ -4,7 +4,7 @@ frameworkVersion: '3'
 
 provider:
   name: aws
-  runtime: python3.11
+  runtime: nodejs20.x
   stage: ${opt:stage, 'dev'}
   region: ${opt:region, 'us-east-1'}
   memorySize: 256
@@ -26,9 +26,9 @@ provider:
 
 functions:
   hanoiSolver:
-    handler: backend/handler.lambda_handler
+    handler: backend/dist/handler.handler
     name: ${self:service}-${self:provider.stage}-solver
-    description: Tower of Hanoi recursive solver
+    description: Tower of Hanoi recursive solver (TypeScript)
     events:
       - http:
           path: solve
@@ -213,9 +213,15 @@ resources:
         Name: ${self:service}-${self:provider.stage}-distribution-id
 
 plugins:
-  - serverless-python-requirements
+  - serverless-esbuild
 
 custom:
-  pythonRequirements:
-    dockerizePip: false
-    slim: true
+  esbuild:
+    bundle: true
+    minify: false
+    sourcemap: true
+    exclude:
+      - aws-sdk
+    target: node20
+    platform: node
+    concurrency: 10

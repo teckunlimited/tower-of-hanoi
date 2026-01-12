@@ -2,6 +2,59 @@
 
 All notable changes to the Tower of Hanoi project.
 
+## [3.0.0] - 2026-01-12
+
+### Backend Migration to TypeScript
+
+#### Changed
+- **Complete backend rewrite**: Migrated from Python 3.12 to TypeScript 5.3
+  - Eliminated Python handler (`handler.py` and `requirements.txt`)
+  - Created new TypeScript handler (`handler.ts`)
+  - Added TypeScript configuration (`tsconfig.json`)
+  - Added Node.js dependencies (`package.json`)
+
+- **Runtime change**: Python 3.12 → Node.js 20.x
+  - Faster cold starts
+  - Smaller bundle size (5.3 kB)
+  - Full type safety with TypeScript
+
+- **Deployment tooling**:
+  - AWS SAM → Serverless Framework with serverless-esbuild
+  - Automated build pipeline with TypeScript compilation
+  - Integrated deployment script handles entire stack
+
+#### Added
+- **TypeScript features**:
+  - Interface definitions for all data structures
+  - `LambdaEvent`, `LambdaContext`, `LambdaResponse` types
+  - `SolutionResponse` and `SolveRequest` interfaces
+  - Strict type checking with `strict: true`
+  - Source maps for debugging
+
+- **Backend package management**:
+  - npm scripts for build, watch, test, clean
+  - @types/aws-lambda for Lambda type definitions
+  - @types/node for Node.js types
+  - TypeScript compiler configuration
+
+#### Technical Details
+- Handler path changed: `backend/handler.lambda_handler` → `backend/dist/handler.handler`
+- Bundle size: ~5.3 kB (compiled JavaScript)
+- Build output: `backend/dist/` (gitignored)
+- Identical API behavior and responses
+- Same recursive algorithm implementation
+- Compatible with existing frontend without changes
+
+### Benefits of TypeScript Migration
+- ✅ Full type safety and compile-time error catching
+- ✅ Better IDE support with IntelliSense
+- ✅ Consistent language across full stack (TypeScript everywhere)
+- ✅ Faster Lambda cold starts with Node.js runtime
+- ✅ Smaller bundle size with esbuild optimization
+- ✅ Enhanced code maintainability and refactoring support
+
+---
+
 ## [2.0.0] - 2026-01-11
 
 ### Major UI Overhaul

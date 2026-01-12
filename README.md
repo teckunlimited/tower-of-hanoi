@@ -3,7 +3,7 @@
 A complete, production-ready Tower of Hanoi puzzle solver with an interactive React frontend and serverless AWS Lambda backend.
 
 ![Tower of Hanoi](https://img.shields.io/badge/Puzzle-Tower%20of%20Hanoi-blue)
-![Python](https://img.shields.io/badge/Python-3.12-green)
+![TypeScript](https://img.shields.io/badge/TypeScript-5.3-3178C6)
 ![React](https://img.shields.io/badge/React-18+-61DAFB)
 ![AWS Lambda](https://img.shields.io/badge/AWS-Lambda-FF9900)
 
@@ -27,7 +27,8 @@ A complete, production-ready Tower of Hanoi puzzle solver with an interactive Re
 
 ### Backend
 - ✅ Recursive Tower of Hanoi solver algorithm
-- ✅ AWS Lambda with Python 3.12 runtime
+- ✅ AWS Lambda with Node.js 20.x runtime
+- ✅ TypeScript with full type safety
 - ✅ REST API via API Gateway
 - ✅ Configurable rod names
 - ✅ Smart response handling (full list for n ≤ 12, count only for n > 12)
@@ -69,10 +70,11 @@ graph TB
 ## 🛠️ Tech Stack
 
 ### Backend
-- **Runtime**: Python 3.12
+- **Runtime**: Node.js 20.x
+- **Language**: TypeScript 5.3
 - **Compute**: AWS Lambda
 - **API**: API Gateway (REST)
-- **Deployment**: AWS SAM (Serverless Application Model)
+- **Deployment**: Serverless Framework with esbuild
 
 ### Frontend
 - **Framework**: React 18
@@ -90,9 +92,9 @@ graph TB
 ```
 tower-of-hanoi/
 ├── backend/
-│   ├── handler.py              # Lambda function handler
-│   ├── template.yaml           # AWS SAM template
-│   ├── requirements.txt        # Python dependencies (empty - stdlib only)
+│   ├── handler.ts              # TypeScript Lambda handler
+│   ├── package.json            # Node.js dependencies
+│   ├── tsconfig.json           # TypeScript configuration
 │   └── .gitignore
 ├── frontend/
 │   ├── src/
@@ -118,8 +120,8 @@ tower-of-hanoi/
 
 ### Backend
 - [AWS CLI](https://aws.amazon.com/cli/) configured with credentials
-- [AWS SAM CLI](https://docs.aws.amazon.com/serverless-application-model/latest/developerguide/install-sam-cli.html)
-- Python 3.12+
+- [Serverless Framework](https://www.serverless.com/framework/docs/getting-started)
+- Node.js 18+
 
 ### Frontend
 - Node.js 18+ and npm/yarn
@@ -135,52 +137,63 @@ cd tower-of-hanoi
 
 ## 🔧 Backend Deployment
 
-### Option 1: AWS SAM (Recommended)
+### Option 1: Automated Script (Recommended)
 
-1. **Navigate to backend directory**:
+```bash
+# Deploy to dev environment
+npm run deploy:dev
+
+# Deploy to production  
+npm run deploy:prd
+```
+
+The script automatically:
+- Compiles TypeScript to JavaScript
+- Deploys Lambda function + API Gateway
+- Creates S3 bucket and CloudFront distribution
+- Builds and uploads frontend
+- Returns all endpoints and URLs
+
+### Option 2: Manual Serverless Deployment
+
+1. **Navigate to project root**:
+   ```bash
+   cd tower-of-hanoi
+   ```
+
+2. **Install dependencies**:
+   ```bash
+   npm install
+   cd backend && npm install && cd ..
+   ```
+
+3. **Build TypeScript**:
+   ```bash
+   cd backend && npm run build && cd ..
+   ```
+
+4. **Deploy with Serverless**:
+   ```bash
+   serverless deploy --stage dev
+   ```
+
+5. **Get API endpoint** from deployment output
+
+### Option 3: Manual Lambda Deployment
+
+1. **Build TypeScript locally**:
    ```bash
    cd backend
+   npm install
+   npm run build
    ```
 
-2. **Build the SAM application**:
-   ```bash
-   sam build
-   ```
+2. **Create Lambda function via AWS Console**:
+   - Runtime: Node.js 20.x
+   - Handler: `handler.handler`
+   - Upload `backend/dist/handler.js` as code (zip the dist folder)
 
-3. **Deploy with guided configuration** (first time):
-   ```bash
-   sam deploy --guided
-   ```
-   
-   You'll be prompted for:
-   - Stack Name: `tower-of-hanoi-stack`
-   - AWS Region: `us-east-1` (or your preferred region)
-   - Confirm changes before deploy: `Y`
-   - Allow SAM CLI IAM role creation: `Y`
-   - Disable rollback: `N`
-   - Save arguments to samconfig.toml: `Y`
-
-4. **Subsequent deployments**:
-   ```bash
-   sam deploy
-   ```
-
-5. **Get your API endpoint**:
-   ```bash
-   aws cloudformation describe-stacks \
-     --stack-name tower-of-hanoi-stack \
-     --query 'Stacks[0].Outputs[?OutputKey==`HanoiApiUrl`].OutputValue' \
-     --output text
-   ```
-
-### Option 2: Manual Lambda Deployment
-
-1. **Create Lambda function via AWS Console**:
-   - Runtime: Python 3.12
-   - Handler: `handler.lambda_handler`
-   - Upload `handler.py` as code
-
-2. **Create API Gateway**:
+3. **Create API Gateway**:
    - Type: REST API
    - Create resource: `/solve`
    - Create method: `POST`

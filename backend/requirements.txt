@@ -1,2 +1,0 @@
-# No external dependencies required for Lambda handler
-# Python standard library (json, datetime, typing) is sufficient
