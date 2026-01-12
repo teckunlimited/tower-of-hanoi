@@ -1,4 +1,6 @@
 .serverless/
 node_modules/
 
+CHANGELOG.md
+STYLING.md
 PRESENTATION.md
